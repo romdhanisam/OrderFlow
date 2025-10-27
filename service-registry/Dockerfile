@@ -1,0 +1,4 @@
+FROM consul:1.15.4
+
+EXPOSE 8500
+EXPOSE 8600/udp

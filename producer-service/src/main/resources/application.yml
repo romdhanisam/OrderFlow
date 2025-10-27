@@ -1,0 +1,61 @@
+server.port: 9000
+spring:
+  application:
+    name: producer-service
+  profiles:
+    active:
+      - development
+  cloud:
+    config:
+      enabled: false
+  kafka:
+    bootstrap-servers: kafka:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    admin:
+      auto-create: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    org.apache.kafka: INFO
+    org.springframework.kafka: INFO
+    org.apache.kafka.clients.producer: INFO
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+  kafka:
+    bootstrap-servers: localhost:9092
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        register-health-check: true
+        tags:
+          - "Kafka"
+          - "Producer server"
+      host: localhost
+      port: 8500
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  kafka:
+    bootstrap-servers: kafka:9092
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        register-health-check: true
+        tags:
+          - "Kafka"
+          - "Producer server"
+      host: consul
+      port: 8500

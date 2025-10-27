@@ -1,0 +1,27 @@
+<button mat-icon-button
+        color="accent"
+        (click)="toggle();"
+        [disabled]="!orders || orders?.length == 0"
+        cdkOverlayOrigin
+        #trigger="cdkOverlayOrigin">
+    <mat-icon [matBadge]="orders?.length" matBadgeColor="accent"
+              matBadgePosition="below after">shopping_cart</mat-icon>
+<ng-template
+        cdkConnectedOverlay
+        [cdkConnectedOverlayOrigin]="trigger"
+        [cdkConnectedOverlayOpen]="isOpen_"
+>
+    <cdk-virtual-scroll-viewport class="notify-viewport" itemSize="4">
+        <mat-list>
+            <div mat-subheader>Orders</div>
+            <mat-list-item *ngFor="let order of orders">
+                <mat-icon matListItemIcon>article</mat-icon>
+                <div matListItemTitle>Id: {{order.orderId}}</div>
+                <div matListItemLine>Name - Quantity: {{order.product}} - {{order.quantity}}</div>
+                <span matListItemLine>{{order.status}}</span>
+                <button mat-raised-button color="primary" type="button" class="button" (click)="details(order)">Details</button>
+                <mat-divider/>
+            </mat-list-item>
+        </mat-list>
+    </cdk-virtual-scroll-viewport>
+</ng-template>

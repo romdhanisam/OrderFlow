@@ -1,0 +1,60 @@
+server.port: 9002
+spring:
+  application:
+    name: consumer-delivery-service
+  profiles:
+    active:
+      - development
+  cloud:
+    config:
+      enabled: false
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: delivery-location
+      auto-offset-reset: earliest
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    org.apache.kafka: INFO
+    org.springframework.kafka: INFO
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+  kafka:
+    bootstrap-servers: localhost:9092
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        register-health-check: true
+        tags:
+          - "Kafka"
+          - "Consumer server"
+          - "delivery-location"
+      host: localhost
+      port: 8500
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  kafka:
+    bootstrap-servers: kafka:9092
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        register-health-check: true
+        tags:
+          - "Kafka"
+          - "Consumer server"
+          - "delivery-location"
+      host: consul
+      port: 8500

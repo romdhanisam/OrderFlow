@@ -1,0 +1,36 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": false,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "target": "es2022",
+    "module": "es2022",
+    "lib": ["es2018", "dom"],
+    "types": [ "node", "jest"],
+    "paths": {
+      "@CompoLib": ["./projects/compo/src/public-api"],
+      "@Global/*": ["src/app/global/*"],
+      "@Settings/*": ["src/app/settings/*"],
+      "@Shared/*": ["src/app/shared/*"],
+      "@Resource/*": ["src/app/resources/*"],
+      "@Store/*": ["src/app/store/*"],
+      "@Worker/*": ["src/app/workers/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true
+  }
+}

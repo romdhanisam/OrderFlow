@@ -1,0 +1,63 @@
+server.port: 8000
+spring:
+  application:
+    name: gateway-service
+  profiles:
+    active:
+      - development
+  cloud:
+    config:
+      enabled: false
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+          routes:
+            - id: producer-service
+              uri: lb://producer-service
+              predicates:
+                - Path=/api/**
+            - id: consumer-order-service
+              uri: lb://consumer-order-service
+              predicates:
+                - Path=/ws-orders/**
+            - id: consumer-delivery-service
+              uri: lb://consumer-delivery-service
+              predicates:
+                - Path=/ws-delivery/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        register-health-check: true
+        tags:
+          - "Gateway"
+      host: localhost
+      port: 8500
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  cloud:
+    consul:
+      discovery:
+        register: true
+        prefer-ip-address: true
+        service-name: gateway-service
+        tags:
+          - "Gateway"
+      host: consul
+      port: 8500

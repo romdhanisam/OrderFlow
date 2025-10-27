@@ -1,0 +1,16 @@
+<h1>Kafka Order Demo</h1>
+<form [formGroup]="orderAssignmentForm">
+    <div class="app-standard-form-field">
+        <mat-form-field appearance="outline">
+            <input matInput type="string" placeholder="Order Id" formControlName="orderId">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <input matInput type="string" placeholder="Order Name" formControlName="orderName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <input matInput type="number" placeholder="Order Quantity" formControlName="orderQuantity">
+        </mat-form-field>
+        <button mat-raised-button color="accent" type="button" class="button" (click)="sendOrder()"
+                [disabled]="!orderAssignmentForm.valid">Send Order</button>
+    </div>
+</form>

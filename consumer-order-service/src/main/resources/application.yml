@@ -1,0 +1,63 @@
+server.port: 9001
+spring:
+  application:
+    name: consumer-order-service
+  profiles:
+    active:
+      - development
+  cloud:
+    config:
+      enabled: false
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: order-group
+      auto-offset-reset: earliest
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+logging:
+  level:
+    org.apache.kafka: INFO
+    org.springframework.kafka: INFO
+---
+spring:
+  config:
+    activate:
+      on-profile: development
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: order-group
+      auto-offset-reset: earliest
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        register-health-check: true
+        tags:
+          - "Kafka"
+          - "Consumer server"
+          - "order-group"
+      host: localhost
+      port: 8500
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  kafka:
+    bootstrap-servers: kafka:9092
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        register-health-check: true
+        tags:
+          - "Kafka"
+          - "Consumer server"
+          - "order-group"
+      host: consul
+      port: 8500
