@@ -13,7 +13,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws-orders")
-                .setAllowedOriginPatterns("http://localhost", "http://gateway-service:8000")
+                .setAllowedOriginPatterns("http://localhost", "http://localhost:4200", "http://gateway-service:8000")
                 .withSockJS();
     }
 
