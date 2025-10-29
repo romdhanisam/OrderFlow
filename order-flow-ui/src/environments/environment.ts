@@ -4,5 +4,9 @@
 
 export const environment = {
   production: false,
-  env: 'DEV'
+  env: 'DEV',
+  source: {
+    order_host: "http://localhost:9001/ws-orders",
+    delivery_host: "http://localhost:9002/ws-delivery"
+  }
 };

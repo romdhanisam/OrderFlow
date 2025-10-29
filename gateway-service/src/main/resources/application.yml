@@ -20,11 +20,11 @@ spring:
               predicates:
                 - Path=/api/**
             - id: consumer-order-service
-              uri: lb://consumer-order-service
+              uri: lb://consumer-order-service:9001
               predicates:
                 - Path=/ws-orders/**
             - id: consumer-delivery-service
-              uri: lb://consumer-delivery-service
+              uri: lb://consumer-delivery-service:9002
               predicates:
                 - Path=/ws-delivery/**
 management:

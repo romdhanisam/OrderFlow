@@ -5,6 +5,7 @@ import { IMessage } from '@stomp/stompjs';
 import {Store} from "@ngrx/store";
 import {IOrder, OrderState, UpdateOrder} from "@Store/reducers/order-reducer";
 import {WebSocketService} from "@Resource/order/web-socket.service";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class OrderService {
   }
   // Connect to Consumer through WebSocket to get Orders
   connectWebSocket() {
-    let stompClient = this.webSocketService.connect("http://localhost:9001/ws-orders");
+    let stompClient = this.webSocketService.connect(environment.source.order_host);
     stompClient.onConnect = () => {
       stompClient.subscribe(this.apiOrderTopic, (message: IMessage) => {
         const current = this.ordersSubject.value;

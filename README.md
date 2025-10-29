@@ -30,14 +30,16 @@ Technology Stack used for development:
                                       │  (REST / WebSocket)
                                       ▼
                           ┌────────────────────────────┐
-                          │     Gateway Service       │
-                          │ (Spring Cloud Gateway)    │
+                          │     Gateway Service        │
+                          │ (Spring Cloud Gateway)     │
                           └─────────┬──────────────────┘
                                     │
                                     ▼
                          ┌───────────────────────────────┐
                          │        Apache Kafka           │
                          │  (order-topic, delivery-topic)│
+                         │    Simulates orders           │
+                         │       &  driver location      │
                          └─────────┬─────────┬───────────┘
                                    │         │
              ┌─────────────────────┘         └─────────────────────┐
@@ -45,7 +47,7 @@ Technology Stack used for development:
 ┌────────────────────────────┐                 ┌────────────────────────────┐
 │  Consumer Order Service    │                 │ Consumer Delivery Service  │
 │ (Group: order-group)       │                 │ (Group: delivery-group)    │
-│ - Consumes new orders      │                 │ - Simulates driver location│
+│ - Consumes new orders      │                 │ - Consumes driver location │
 └────────────────────────────┘                 └────────────────────────────┘
 
                         ┌──────────────────────────────┐
