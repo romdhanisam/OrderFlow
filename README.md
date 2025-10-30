@@ -23,43 +23,36 @@ Technology Stack used for development:
 
 ## Components
 ```md
-                            ┌─────────────────────┐
-                            │     Frontend UI     │
-                            │ (Angular + Leaflet) │
-                            └─────────┬───────────┘
-                                      │  (REST / WebSocket)
-                                      ▼
-                          ┌────────────────────────────┐
-                          │     Gateway Service        │
-                          │ (Spring Cloud Gateway)     │
-                          └─────────┬──────────────────┘
-                                    │
-                                    ▼
-                         ┌───────────────────────────────┐
-                         │        Apache Kafka           │
-                         │  (order-topic, delivery-topic)│
-                         │    Simulates orders           │
-                         │       &  driver location      │
-                         └─────────┬─────────┬───────────┘
-                                   │         │
-             ┌─────────────────────┘         └─────────────────────┐
-             ▼                                                     ▼
-┌────────────────────────────┐                 ┌────────────────────────────┐
-│  Consumer Order Service    │                 │ Consumer Delivery Service  │
-│ (Group: order-group)       │                 │ (Group: delivery-group)    │
-│ - Consumes new orders      │                 │ - Consumes driver location │
-└────────────────────────────┘                 └────────────────────────────┘
++---------------------+                    +-------------------------+
+|  Frontend UI        | --------------->   |      API Gateway        |
+| (Angular + Leaflet) | (REST / WebSocket) |   (Spring Cloud Gateway)|
++---------------------+                    +-------------------------+
+                                                  |
+                                                  ▼
+                                    ┌───────────────────────────────┐
+                                    │        Apache Kafka           │
+                                    │  (order-topic, delivery-topic)│
+                                    │    Simulates orders           │
+                                    │       &  driver location      │
+                                    └─────────┬──┬──────────────────┘
+                                              │  │
+                         ┌────────────────────┘  └──────────────────┐
+                         ▼                                          ▼
+      ┌────────────────────────────┐                 ┌────────────────────────────┐
+      │  Consumer Order Service    │                 │ Consumer Delivery Service  │
+      │ (Group: order-group)       │                 │ (Group: delivery-group)    │
+      │ - Consumes new orders      │                 │ - Consumes driver location │
+      └────────────────────────────┘                 └────────────────────────────┘
+                                    
+            ┌──────────────────────────────┐
+            │        Consul Registry       │
+            │ (Service Discovery & Health) │
+            └──────────────────────────────┘
 
-                        ┌──────────────────────────────┐
-                        │        Consul Registry       │
-                        │ (Service Discovery & Health) │
-                        └──────────────────────────────┘
-
-                        ┌──────────────────────────────┐
-                        │          Kafka UI            │
-                        │      (Topic inspection)      │
-                        └──────────────────────────────┘
-
+             ┌──────────────────────────────┐
+             │          Kafka UI            │
+             │      (Topic inspection)      │
+             └──────────────────────────────┘
 ```
 
 #### Docker services
