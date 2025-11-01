@@ -1,0 +1,38 @@
+site_name: OrderFlow Docs
+site_url: "https://romdhanisam.github.io/orderflow/"
+repo_url: "https://github.com/romdhanisam/OrderFlow/"
+repo_name: "romdhanisam/OrderFlow"
+site_dir: public
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - content.code.annotate
+    - content.tabs.link
+nav:
+  - Welcome to OrderFlow: index.md
+  - Technology: Technology.md
+  - Services: svc.md
+  - Components: Components.md
+  - Data Flow Summary: Data_Flow_Summary.md
+  - Gateway Configuration Overview: gateway.md
+  - NGINX Configuration Overview: nginx.md
+
+markdown_extensions:
+  - admonition
+  - def_list
+  - attr_list
+  - footnotes
+  - pymdownx.highlight:
+      anchor_linenums: true
+      linenums: true
+      linenums_style: pymdownx.inline
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - md_in_html
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
